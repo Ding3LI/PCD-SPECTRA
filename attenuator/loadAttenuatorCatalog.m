@@ -9,8 +9,7 @@ catalogFile = fullfile(attenuatorDir, "attenuatorCatalog.mat");
 
 if ~isfile(catalogFile)
     error("attenuator:CatalogNotFound", ...
-        ["Attenuator catalog not found. Run buildAttenuatorCatalog " ...
-         "from matlab_interface/attenuator first."]);
+        "Bundled attenuator catalog is missing. Reinstall PCD-SPECTRA.");
 end
 
 storedData = load(catalogFile, "catalog");

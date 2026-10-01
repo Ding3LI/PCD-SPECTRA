@@ -10,9 +10,9 @@ attenuator material catalog:
   Teflon, SoftTissue, and Water.
 
 The generated `attenuatorCatalog.mat` stores density, mass attenuation, and
-linear attenuation data on the 1–150 keV energy grid and the
-bundled PCD spectral-response data. Element records also include atomic
-number and atomic mass.
+linear attenuation data on the 1–150 keV energy grid. Element records also
+include atomic number and atomic mass. The detector response matrix is
+stored separately in `energy_response/AlphaEnergyResponse.txt`.
 
 ## MATLAB usage
 

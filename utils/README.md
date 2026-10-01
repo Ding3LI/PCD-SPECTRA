@@ -21,8 +21,8 @@ the MATLAB app.
        sum over E of R(E, E') * S_post(E)
    ```
 
-   This matches `LyFilterWithPCDEnergyResponse.m`. Output bins below
-   20 keV are set to zero in `runSpectrumAnalysis`.
+   This matrix multiplication is implemented in `calculateOutputSpectrum`.
+   Output bins below 20 keV are set to zero in `runSpectrumAnalysis`.
 
 3. `separateSpectrumBins` calculates the post-object input-energy
    contribution distributions:
@@ -33,8 +33,8 @@ the MATLAB app.
    ```
 
    The split threshold defaults to 53, 64, 68, and 68 keV for 70, 90, 120,
-   and 140 kV. The lower and upper detector thresholds remain 20 and
-   150 keV.
+   and 140 kV. The lower detector threshold defaults to 20 keV and can be changed
+   in the app; the upper detector threshold is fixed at 150 keV.
 
 4. The same split threshold decomposes the detected counts:
 

@@ -16,9 +16,17 @@ The licensor grants you an additional copyright license to distribute copies of 
 
 ## Notices
 
-You must ensure that anyone who gets a copy of any part of the software from you also gets a copy of these terms or the URL for them above, as well as copies of any plain-text lines beginning with `Required Notice:` that the licensor provided with the software.  For example:
+You must ensure that anyone who gets a copy of any part of the software from you also gets a copy of these terms or the URL for them above, as well as copies of any plain-text lines beginning with `Required Notice:` that the licensor provided with the software.
 
-> Required Notice: Copyright Yoyodyne, Inc. (http://example.com)
+Required Notice: Copyright © 2026 The University of Texas MD Anderson Cancer Center
+
+## Mandatory Citation Requirement
+
+As an additional condition of the license, any scientific publication, presentation, abstract, poster, report, or other scholarly work that uses PCD-SPECTRA to perform analysis, generate results, or otherwise contribute to the work must cite the following publication:
+
+> Linying Zhan, Shanli Ding, Frank Dong, Guang-Hong Chen, Ke Li. "Quantifying Photon Counting Detector (PCD) Performance Using PCD-CT Images. Part II. Detector Spectral Response Function of Clinical Scanners." Medical Physics, 2026.
+
+Failure to comply with this Mandatory Citation Requirement constitutes a violation of these license terms and is subject to the Violations provision below.
 
 ## Changes and New Works License
 

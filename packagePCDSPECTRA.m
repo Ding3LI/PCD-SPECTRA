@@ -37,6 +37,9 @@ if strlength(options.OutputFolder) == 0
 else
     outputFolder = options.OutputFolder;
 end
+productionFiles = releaseFiles(toolboxRoot, outputFolder);
+validateProductionRelease(toolboxRoot, metadata, productionFiles, releaseVersion);
+
 packageFile = fullfile( ...
     outputFolder, "PCD-SPECTRA_" + releaseVersion + ".mltbx");
 if ~options.Package
@@ -75,7 +78,7 @@ opts.SupportedPlatforms.Win64 = true;
 opts.SupportedPlatforms.Mac = true;
 opts.SupportedPlatforms.Glnxa64 = true;
 opts.SupportedPlatforms.MatlabOnline = true;
-opts.ToolboxFiles = releaseFiles(toolboxRoot, outputFolder);
+opts.ToolboxFiles = productionFiles;
 opts.ToolboxMatlabPath = {toolboxRoot, fullfile(toolboxRoot, "utils"), ...
     fullfile(toolboxRoot, "attenuator")};
 opts.AppGalleryFiles = appFile;
@@ -87,11 +90,63 @@ fprintf("Created PCD-SPECTRA package: %s\n", packageFile);
 end
 
 function files = releaseFiles(toolboxRoot, outputFolder)
-entries = dir(fullfile(toolboxRoot, "**", "*"));
-entries = entries(~[entries.isdir]);
-files = string(fullfile({entries.folder}, {entries.name}));
-isHiddenMetadata = endsWith(files, ".DS_Store");
-isPackage = endsWith(lower(files), ".mltbx");
-isReleaseOutput = startsWith(files, string(outputFolder));
-files = files(~(isHiddenMetadata | isPackage | isReleaseOutput));
+% Include production assets only, regardless of local peer-review files.
+rootFiles = ["runPCDSPECTRA.m", "launchPCDSPECTRAApp.m", ...
+    "PCDSPECTRAApp.m", "PCDSPECTRAVersion.m", "packagePCDSPECTRA.m", ...
+    "VERSION", "README.md", "CITATION.cff", "LICENSE.md", "NOTICE.md"];
+assetFolders = ["utils", "attenuator", "incident_spectra", ...
+    "energy_response", "icons", "doc"];
+deploymentFiles = ["PCDSPECTRAReleaseMetadata.m", "CITATION.md", ...
+    "THIRD_PARTY_NOTICES.md", "MATLAB_CENTRAL_LISTING.md", ...
+    "DEPLOYMENT_GUIDE.md", "PUBLIC_FILE_EXCHANGE_PUBLISHING.md"];
+files = fullfile(string(toolboxRoot), rootFiles(:));
+for folder = assetFolders
+    entries = dir(fullfile(toolboxRoot, folder, "**", "*"));
+    entries = entries(~[entries.isdir]);
+    assetFiles = string(fullfile({entries.folder}, {entries.name}))';
+    [~, names, extensions] = fileparts(assetFiles);
+    isHidden = startsWith(names, ".");
+    isAnonymous = contains(lower(names), "anonymous") | ...
+        contains(lower(names), "anonymized");
+    allowedExtension = ismember(lower(extensions), ...
+        [".m", ".md", ".mat", ".txt", ".png", ".svg"]);
+    files = [files; assetFiles(~isHidden & ~isAnonymous & allowedExtension)]; %#ok<AGROW>
+end
+files = [files; fullfile(string(toolboxRoot), "deployment", ...
+    deploymentFiles(:))];
+isOutput = startsWith(files, string(outputFolder) + filesep);
+files = unique(files(~isOutput));
+assert(all(isfile(files)), "PCDSPECTRA:IncompleteRelease", ...
+    "A production release asset is missing.");
+end
+
+function validateProductionRelease(toolboxRoot, metadata, files, releaseVersion)
+assert(all(strlength([metadata.AuthorName, metadata.AuthorEmail, ...
+    metadata.AuthorCompany, metadata.CopyrightHolder]) > 0), ...
+    "PCDSPECTRA:IncompleteMetadata", "Public release metadata is incomplete.");
+assert(strlength(metadata.ToolboxImageFile) > 0 && ...
+    isfile(fullfile(toolboxRoot, metadata.ToolboxImageFile)), ...
+    "PCDSPECTRA:MissingToolboxImage", "The production toolbox icon is missing.");
+citation = string(fileread(fullfile(toolboxRoot, "CITATION.cff")));
+assert(contains(citation, "version: " + releaseVersion + newline), ...
+    "PCDSPECTRA:CitationVersionMismatch", "CITATION.cff must match VERSION.");
+for file = files'
+    [~, ~, extension] = fileparts(file);
+    if ismember(extension, [".m", ".md", ".cff"]) && ...
+            file ~= fullfile(toolboxRoot, "packagePCDSPECTRA.m")
+        content = fileread(file);
+        unfinished = regexpi(content, ...
+            "\[In Progress\]|\bTODO\b|\bFIXME\b|\bTBD\b|manuscript under review|redacted for (anonymous )?peer review", ...
+            "once");
+        assert(isempty(unfinished), "PCDSPECTRA:UnfinishedRelease", ...
+            "Unfinished release text found in %s.", file);
+    end
+end
+addpath(fullfile(toolboxRoot, "utils"), fullfile(toolboxRoot, "attenuator"));
+loadAlphaEnergyResponse();
+loadAlphaEnergyColormap();
+loadAttenuatorCatalog();
+for kV = [70 90 120 140]
+    loadIncidentSpectrum(kV);
+end
 end

@@ -5,14 +5,10 @@ title: PCD-SPECTRA
 type: software
 version: 1.0.0
 authors:
-  - family-names: Zhan
-    given-names: Linying
   - family-names: Ding
     given-names: Shanli
-  - family-names: Dong
-    given-names: Frank
-  - family-names: Chen
-    given-names: Guang-Hong
+  - family-names: Zhan
+    given-names: Linying
   - family-names: Li
     given-names: Ke
 preferred-citation:
@@ -32,4 +28,5 @@ preferred-citation:
     - family-names: Li
       given-names: Ke
   journal: Medical Physics
-  notes: Manuscript under review.
+  year: 2026
+  notes: Accepted for publication.

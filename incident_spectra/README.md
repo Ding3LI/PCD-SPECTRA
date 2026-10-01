@@ -1,7 +1,7 @@
 # Incident spectrum database
 
-`incident_spectrum.mat` contains incident spectrum data.
-`incident_spectra.mat` database.
+`incident_spectrum.mat` contains the zero-PMMA incident spectra extracted
+from the bundled source database, `incident_spectra.mat`.
 
 The compact file contains:
 

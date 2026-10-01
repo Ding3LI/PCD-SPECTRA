@@ -1,2 +1,13 @@
+# Local metadata and generated production packages
 .DS_Store
 deployment/release/
+
+# Private peer-review sources and anonymous build artifacts
+packagePCDSPECTRAAnonymous.m
+deployment/anonymized_templates/
+*anonymized*.mltbx
+*anonymous*.mltbx
+
+# Local release verification output
+deployment/verification_output/
+tests/

@@ -951,8 +951,29 @@ end
 
 function themeStyle = currentFigureTheme(figureHandle)
 themeStyle = "light";
-if isprop(figureHandle, "Theme")
-    themeStyle = string(figureHandle.Theme.BaseColorStyle);
+
+% Graphics themes were introduced in R2025a. In older releases, Theme can
+% still appear in the figure metaclass but resolve to a GraphicsPlaceholder,
+% so checking only isprop(figureHandle, "Theme") is not sufficient.
+if exist("theme", "file") ~= 2
+    return
+end
+
+try
+    graphicsTheme = figureHandle.Theme;
+    if isempty(graphicsTheme) || ...
+            ~isprop(graphicsTheme, "BaseColorStyle")
+        return
+    end
+
+    detectedTheme = lower(string(graphicsTheme.BaseColorStyle));
+    if isscalar(detectedTheme) && ...
+            any(strcmp(detectedTheme, ["light", "dark"]))
+        themeStyle = detectedTheme;
+    end
+catch
+    % Theme-aware contrast is optional. Keep the fixed light palette if a
+    % release or graphics backend does not provide a usable theme object.
 end
 end
 

@@ -5,9 +5,15 @@ Response Analysis. Version `1.0.0` is a production research release that
 supports interactive exploration of X-ray spectra, attenuator transmission,
 detector spectral response, and PCD energy-bin classification.
 
+Authors: Shanli Ding, Linying Zhan, Ke Li
+
+Copyright © 2026 The University of Texas MD Anderson Cancer Center
+
 ## Launch
 
-From the repository root or after installing the MATLAB toolbox, run:
+After downloading and extracting the source ZIP, open its repository root
+in MATLAB and run the command below. The same launcher is available after
+installing a separately distributed MATLAB toolbox:
 
 ```matlab
 runPCDSPECTRA
@@ -56,8 +62,8 @@ Calculation details are documented in `utils/README.md`.
 
 The spectral response functions (SRFs) displayed by this software were
 estimated from measurements performed on a specific Siemens NAEOTOM Alpha
-PCD-CT scanner, as described in the manuscript by Zhan et al. that is under
-review at *Medical Physics*. These results do not represent the views of
+PCD-CT scanner, as described in the manuscript by Zhan et al. accepted for
+publication in *Medical Physics*. These results do not represent the views of
 Siemens and should not be interpreted as representative of the SRFs of other
 NAEOTOM Alpha PCD-CT scanners. This software is provided solely to facilitate
 dissemination and reproducibility of the results reported in that manuscript;
@@ -70,11 +76,11 @@ If you use PCD-SPECTRA in research, cite:
 
 > Zhan, L., Ding, S., Dong, F., Chen, G.-H., & Li, K. *Quantifying Photon
 > Counting Detector (PCD) Performance Using PCD-CT Images. Part II. Detector
-> Spectral Response Function of Clinical Scanners.* Manuscript under review at
-> *Medical Physics*.
+> Spectral Response Function of Clinical Scanners.* Accepted for publication in
+> *Medical Physics* (2026).
 
-See `deployment/CITATION.md` for software acknowledgement and blinded-review
-wording.
+See `deployment/CITATION.md` for software acknowledgement and publication
+status.
 
 ## License
 
@@ -84,5 +90,8 @@ modification, and distribution for noncommercial purposes. This includes
 research use by individuals and organizations, including companies, when the
 use itself is noncommercial. Commercial use is not licensed. Because the
 license restricts commercial use, it is not an OSI-approved open-source
-license. Copyright © 2026 Ke Li Lab. See `NOTICE.md` for the required
-copyright notice.
+license. The mandatory scholarly citation requirement is specified in
+`LICENSE.md` and `NOTICE.md`.
+
+Copyright © 2026 The University of Texas MD Anderson Cancer Center.
+See `NOTICE.md` for the required copyright notice.
